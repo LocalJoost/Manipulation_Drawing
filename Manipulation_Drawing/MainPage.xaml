@@ -1,0 +1,193 @@
+﻿<Page
+    x:Class="Manipulation_Drawing.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    mc:Ignorable="d">
+
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <VisualStateManager.VisualStateGroups>
+      <VisualStateGroup>
+        <VisualState x:Name="wideState">
+          <VisualState.StateTriggers>
+            <AdaptiveTrigger MinWindowWidth="641" />
+          </VisualState.StateTriggers>
+          <VisualState.Setters>
+            <Setter Target="Title.FontSize" Value="27"/>
+            <Setter Target="Title.Margin" Value="0"/>
+          </VisualState.Setters>
+        </VisualState>
+        <VisualState x:Name="narrowState">
+          <VisualState.StateTriggers>
+            <AdaptiveTrigger MinWindowWidth="0" />
+          </VisualState.StateTriggers>
+          <VisualState.Setters>
+            <Setter Target="Title.FontSize" Value="15"/>
+            <Setter Target="Title.Margin" Value="0,4,0,0"/>
+          </VisualState.Setters>
+        </VisualState>
+      </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+    
+    <Grid Margin="12,0,12,0" >
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Grid Margin="0,18,0,5">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="0.7*"></ColumnDefinition>
+          <ColumnDefinition Width="0.3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="0,0,0,5" Orientation="Horizontal" Grid.ColumnSpan="2">
+          <ToggleButton Style="{StaticResource SymbolButton}" Foreground="Blue" Margin="-12,0,0,0" Click="ToggleButton_Click">
+            <ToggleButton.Content>
+              <Border Background="Transparent">
+                <FontIcon x:Name="Hamburger" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" />
+              </Border>
+            </ToggleButton.Content>
+          </ToggleButton>
+          <TextBlock x:Name ="Title"  TextWrapping="Wrap" Text="Drawing shapes &amp; messing around" FontSize="26.667" HorizontalAlignment="Left" />
+        </StackPanel>
+
+      </Grid>
+      <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="0.9*"></ColumnDefinition>
+          <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"></RowDefinition>
+          <RowDefinition Height="0.9*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <maps:MapControl x:Name="MyMap" Grid.Row="1"
+                       MapTapped="OnMapTapped"
+                       MapServiceToken="bla:ZZDFE%35354-eN9AjO34J_3ZIv0r1rFsnEKOn8TUBD6QvCyoVm7F;" />
+
+        <Slider x:Name="RotationSlider" VerticalAlignment="Top" Minimum ="-180" Maximum="180" 
+                Value="{Binding ElementName=MyMap, Path=Heading, Mode=TwoWay}" />
+        <Slider x:Name="PitchSlider" Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="0,0,0,12" Minimum="0" Maximum="75" 
+                Value="{Binding ElementName=MyMap, Path=DesiredPitch, Mode=TwoWay}" />
+      </Grid>
+      <SplitView  x:Name="Splitter"  DisplayMode="Inline" Margin="-12,59,-12,0" Grid.RowSpan="2"    >
+        <SplitView.Pane >
+
+          <ScrollViewer x:Name="PaneGrid" Background="#C4C4F4"  >
+            <StackPanel Margin="12,0,12,0" VerticalAlignment="Top">
+
+              <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource SymbolPushButton}" Click="DrawLines">
+                  <Button.Content>
+                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE199;" />
+                  </Button.Content>
+                </Button>
+                <TextBlock Style="{StaticResource ButtonLabel}" Text="Draw lines"></TextBlock>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource SymbolPushButton}" Click="DrawShapes">
+                  <Button.Content>
+                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xe20c;" />
+                  </Button.Content>
+                </Button>
+                <TextBlock Style="{StaticResource ButtonLabel}" Text="Draw Shapes" ></TextBlock>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource SymbolPushButton}" Click="DrawPoints">
+                  <Button.Content>
+                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE1C4;" />
+                  </Button.Content>
+                </Button>
+                <TextBlock Style="{StaticResource ButtonLabel}" Text="Draw Points" ></TextBlock>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource SymbolPushButton}" Click="DeleteAll">
+                  <Button.Content>
+                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE107;" />
+                  </Button.Content>
+                </Button>
+                <TextBlock Style="{StaticResource ButtonLabel}" Text="Delete all" Tapped="DeleteAll"></TextBlock>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource SymbolPushButton}" Click="InitialLocation">
+                  <Button.Content>
+                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE1D2;" />
+                  </Button.Content>
+                </Button>
+                <TextBlock Style="{StaticResource ButtonLabel}" Text="Initial location" Tapped="InitialLocation"></TextBlock>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource SymbolPushButton}" Click="ZoomIn">
+                  <Button.Content>
+                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE12E;" />
+                  </Button.Content>
+                </Button>
+                <TextBlock Style="{StaticResource ButtonLabel}" Text="Zoom in" Tapped="ZoomIn"></TextBlock>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource SymbolPushButton}" Click="ZoomOut">
+                  <Button.Content>
+                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE1A4;" />
+                  </Button.Content>
+                </Button>
+                <TextBlock Style="{StaticResource ButtonLabel}" Text="Zoom out" Tapped="ZoomOut"></TextBlock>
+              </StackPanel>
+
+              <GridView >
+                <ToggleButton x:Name="ToggleLandMark" Content="Landmarks" Style="{StaticResource FeatureToggleButton}" Click="ToggleOption"></ToggleButton>
+                <ToggleButton x:Name="ToggleBusiness"  Content="Business" Style="{StaticResource FeatureToggleButton}" Click="ToggleOption"></ToggleButton>
+                <ToggleButton  x:Name="TogglePedestrian" Content="Pedestrian" Style="{StaticResource FeatureToggleButton}" Click="ToggleOption"></ToggleButton>
+                <ToggleButton x:Name="ToggleTraffic" Content="Traffic" Style="{StaticResource FeatureToggleButton}" Click="ToggleOption"></ToggleButton>
+                <ToggleButton x:Name="ToggleTransit" Content="Transit" Style="{StaticResource FeatureToggleButton}" Click="ToggleOption"></ToggleButton>
+              </GridView>
+              
+              <GridView >
+                <Button  Content="Save Scene" Click="SaveScene" Style="{StaticResource SceneButton}"></Button>
+                <Button  Content="Restore Scene" Click="RestoreScene" Style="{StaticResource SceneButton}"></Button>
+              </GridView>
+
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource MapTypeLabel}" Text="Map style"></TextBlock>
+
+                <ComboBox SelectedIndex="1" SelectionChanged="MapSelectionChanged" Width="190" >
+                  <ComboBoxItem>None</ComboBoxItem>
+                  <ComboBoxItem>Road</ComboBoxItem>
+                  <ComboBoxItem>Aerial</ComboBoxItem>
+                  <ComboBoxItem>AerialWithRoads</ComboBoxItem>
+                  <ComboBoxItem>Terrain</ComboBoxItem>
+                  <ComboBoxItem>Aerial3D</ComboBoxItem>
+                  <ComboBoxItem>Aerial3DWithRoads</ComboBoxItem>
+                </ComboBox>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <TextBlock Style="{StaticResource MapTypeLabel}" Text="Tile map"></TextBlock>
+
+                <ComboBox x:Name="TileCombo" SelectionChanged="TileComboChanged" Width="190" ></ComboBox>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource ToggleLabel}" Text="Theme"></TextBlock>
+                <ToggleSwitch x:Name="ThemeToggle" OffContent="Dark" OnContent="Light" IsOn="True" Toggled="ThemeToggle_Toggled"></ToggleSwitch>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource ToggleLabel}" Text="Icon collision"></TextBlock>
+                <ToggleSwitch x:Name="CollisionToggle" OffContent="Hide" OnContent="Show" IsOn="False" Toggled="CollisionToggle_Toggled"></ToggleSwitch>
+              </StackPanel>
+            </StackPanel>
+          </ScrollViewer>
+        </SplitView.Pane>
+      </SplitView>
+    </Grid>
+  </Grid>
+</Page>
