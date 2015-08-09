@@ -66,7 +66,7 @@
         </Grid.RowDefinitions>
         <maps:MapControl x:Name="MyMap" Grid.Row="1"
                        MapTapped="OnMapTapped"
-                       MapServiceToken="bla:ZZDFE%35354-eN9AjO34J_3ZIv0r1rFsnEKOn8TUBD6QvCyoVm7F;" />
+                       MapServiceToken="Your mapkey goes here" />
 
         <Slider x:Name="RotationSlider" VerticalAlignment="Top" Minimum ="-180" Maximum="180" 
                 Value="{Binding ElementName=MyMap, Path=Heading, Mode=TwoWay}" />
