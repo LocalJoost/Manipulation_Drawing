@@ -32,8 +32,6 @@ namespace Manipulation_Drawing
       await MyMap.TrySetViewAsync(new Geopoint(new BasicGeoposition { Latitude = 52.181427, Longitude = 5.399780 }),
         16, RotationSlider.Value, PitchSlider.Value, MapAnimationKind.Bow);
 
-      //MyMap.ZoomToAsync(16);
-
       //MyMap.Center = new Geopoint(new BasicGeoposition {Latitude = 52.181427, Longitude = 5.399780});
       //MyMap.ZoomLevel = 16;
     }
