@@ -51,15 +51,16 @@ namespace Manipulation_Drawing
     // -------------------- 'ADVANCED' MANIPULATION -----------------------
 
     // Not used now - replaced by databinding
-    private void RotationSliderOnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+    private void RotationSliderOnValueChanged(object sender, 
+                 RangeBaseValueChangedEventArgs e)
     {
       MyMap.TryRotateToAsync(e.NewValue);
 
       //Same result, sans the cool animation.
-     // MyMap.Heading = e.NewValue;
+      MyMap.Heading = e.NewValue;
 
       //Rotates BY a certain value.
-      //MyMap.TryRotateAsync(e.NewValue);
+      MyMap.TryRotateAsync(e.NewValue);
     }
 
     // Not used now - replaced by databinding
@@ -101,15 +102,13 @@ namespace Manipulation_Drawing
     {
       MyMap.ColorScheme = ThemeToggle.IsOn ? MapColorScheme.Light : MapColorScheme.Dark;
     }
-
-
-
+    
     // -------------------- DRAWING STUFF ON THE MAP -----------------------
 
-    private void DrawPoints(object sender, RoutedEventArgs e)
+    private async void DrawPoints(object sender, RoutedEventArgs e)
     {
       // How to draw a new MapIcon with a label, anchorpoint and custom icon.
-      // Icon comes from shared project assets
+      // Icon comes from project assets
       var anchorPoint = new Point(0.5, 0.5);
       var image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/wplogo.png"));
 
@@ -119,7 +118,8 @@ namespace Manipulation_Drawing
         var area = MyMap.GetViewArea();
 
         // PointList is just a helper class that gives 'some data'
-        var points = PointList.GetRandomPoints(new Geopoint(area.NorthwestCorner), new Geopoint(area.SoutheastCorner),
+        var points = PointList.GetRandomPoints(
+          new Geopoint(area.NorthwestCorner), new Geopoint(area.SoutheastCorner),
           50);
         foreach (var dataObject in points)
         {
@@ -129,7 +129,10 @@ namespace Manipulation_Drawing
             Location = new Geopoint(dataObject.Points.First()),
             NormalizedAnchorPoint = anchorPoint,
             Image = image,
-            CollisionBehaviorDesired = onCollisionShow? MapElementCollisionBehavior.RemainVisible : MapElementCollisionBehavior.Hide,
+            CollisionBehaviorDesired = 
+              onCollisionShow? MapElementCollisionBehavior.RemainVisible : 
+                               MapElementCollisionBehavior.Hide,
+
             ZIndex = 3,
           };
           shape.AddData(dataObject);
@@ -140,7 +143,7 @@ namespace Manipulation_Drawing
       catch (Exception)
       {
         var dialog = new MessageDialog("GetViewArea error");
-        dialog.ShowAsync();
+        await dialog.ShowAsync();
       }
     }
 
