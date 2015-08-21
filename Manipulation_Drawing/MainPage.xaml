@@ -65,7 +65,7 @@
           <RowDefinition Height="0.9*"></RowDefinition>
         </Grid.RowDefinitions>
         <maps:MapControl x:Name="MyMap" Grid.Row="1"
-                       MapTapped="OnMapTapped"
+                         MapElementClick="OnMapElementClick"
                        MapServiceToken="Your mapkey goes here" />
 
         <Slider x:Name="RotationSlider" VerticalAlignment="Top" Minimum ="-180" Maximum="180" 

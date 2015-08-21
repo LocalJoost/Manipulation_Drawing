@@ -236,8 +236,7 @@ namespace Manipulation_Drawing
 
     // -------------------- QUERYING THE MAP -----------------------
 
-    //MapTapped - not Map.Tapped!!
-    private async void OnMapTapped(MapControl sender, MapInputEventArgs args)
+    private async void OnMapElementClick(MapControl sender, MapElementClickEventArgs args)
     {
       var resultText = new StringBuilder();
 
@@ -245,13 +244,12 @@ namespace Manipulation_Drawing
       resultText.AppendLine($"Position={args.Position.X},{args.Position.Y}");
       resultText.AppendLine($"Location={args.Location.Position.Latitude:F9},{args.Location.Position.Longitude:F9}");
 
-      var mapObjects = sender.FindMapElementsAtOffset(args.Position);
-      foreach (var mapObject in mapObjects)
+      foreach (var mapObject in args.MapElements)
       {
         resultText.AppendLine("Found: " + mapObject.ReadData<PointList>().Name);
       }
       var dialog = new MessageDialog(resultText.ToString(),
-        mapObjects.Any() ? "Found the following objects" : "No data found");
+        args.MapElements.Any() ? "Found the following objects" : "No data found");
       await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
         async () => await dialog.ShowAsync());
     }
