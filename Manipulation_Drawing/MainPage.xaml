@@ -64,9 +64,10 @@
           <RowDefinition Height="Auto"></RowDefinition>
           <RowDefinition Height="0.9*"></RowDefinition>
         </Grid.RowDefinitions>
-        <maps:MapControl x:Name="MyMap" Grid.Row="1"
+        <maps:MapControl x:Name="MyMap" Grid.Row="1" 
+                         ZoomInteractionMode="GestureAndControl" RotateInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" PanInteractionMode="Auto"
                          MapElementClick="OnMapElementClick"
-                       MapServiceToken="Your mapkey goes here" />
+                       MapServiceToken="Your Mapkey Here"  />
 
         <Slider x:Name="RotationSlider" VerticalAlignment="Top" Minimum ="-180" Maximum="180" 
                 Value="{Binding ElementName=MyMap, Path=Heading, Mode=TwoWay}" />
