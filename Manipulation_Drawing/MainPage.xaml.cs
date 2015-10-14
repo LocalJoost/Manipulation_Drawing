@@ -293,8 +293,8 @@ namespace Manipulation_Drawing
       TileCombo.Items.Add("None");
       TileCombo.Items.Add(new OpenStreetMapSource());
       TileCombo.Items.Add(new GoogleMapSource("y", "Google Hybrid"));
-      TileCombo.Items.Add(new WmsTileSource("NOAA Weather", "http://nowcoast.noaa.gov/wms/com.esri.wms.Esrimap/obs?serviced=wms", new[] { "RAS_RIDGE_NEXRAD" }, "1.1.1", "SRS"));
-      TileCombo.Items.Add(new WmsTileSource("NOAA Clouds IR", "http://nowcoast.noaa.gov/wms/com.esri.wms.Esrimap/obs?serviced=wms", new[] { "RAS_GOES_I4" }, "1.1.1", "SRS"));
+      TileCombo.Items.Add(new WmsTileSource("NOAA Radar", "http://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WmsServer?", new[] { "1" }, "1.3.0", "CRS"));
+      TileCombo.Items.Add(new WmsTileSource("NOAA Visbile Img", "http://nowcoast.noaa.gov/arcgis/services/nowcoast/sat_meteo_imagery_goes_time/MapServer/WMSServer?", new[] { "9" }, "1.3.0", "CRS"));
       TileCombo.Items.Add(new WmsTileSource("RWS NWB", "http://geodata.nationaalgeoregister.nl/nwbwegen/ows?service=WMS", new[] { "wegvakken", "hectopunten" }));
       TileCombo.Items.Add(new WmsTileSource("RWS NWB 4326", "http://geodata.nationaalgeoregister.nl/nwbwegen/ows?service=WMS", new[] { "wegvakken", "hectopunten"},"1.3.0", "CRS", 4326));
 
