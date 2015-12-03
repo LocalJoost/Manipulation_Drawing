@@ -34,7 +34,7 @@ namespace Manipulation_Drawing
 #if DEBUG
             if (Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+               // this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
 

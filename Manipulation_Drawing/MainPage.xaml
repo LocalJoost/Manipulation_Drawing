@@ -64,12 +64,11 @@
           <RowDefinition Height="Auto"></RowDefinition>
           <RowDefinition Height="0.9*"></RowDefinition>
         </Grid.RowDefinitions>
-        <maps:MapControl x:Name="MyMap" Grid.Row="1" 
+        <maps:MapControl x:Name="MyMap" Grid.Row="1" MapTapped ="OnMapTap"
                          ZoomInteractionMode="GestureAndControl" RotateInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" PanInteractionMode="Auto"
                          MapElementClick="OnMapElementClick"
-                       MapServiceToken="Your Mapkey Here"  />
-
-        <Slider x:Name="RotationSlider" VerticalAlignment="Top" Minimum ="-180" Maximum="180" 
+                         MapServiceToken="Ke0TXNF1FcidQF6YgO9T~H7b6uuAkIfjfrAhy813zFQ~Ao4WIwhfL5mF69JF7AHU1Kn24oUN8Rb9XRZoHTDulFGxEPk5fuqoBQ0ltahKSUwz"  />
+                <Slider x:Name="RotationSlider" VerticalAlignment="Top" Minimum ="-180" Maximum="180" 
                 Value="{Binding ElementName=MyMap, Path=Heading, Mode=TwoWay}" />
         <Slider x:Name="PitchSlider" Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="0,0,0,12" Minimum="0" Maximum="75" 
                 Value="{Binding ElementName=MyMap, Path=DesiredPitch, Mode=TwoWay}" />
@@ -97,6 +96,15 @@
                 </Button>
                 <TextBlock Style="{StaticResource ButtonLabel}" Text="Draw Shapes" ></TextBlock>
               </StackPanel>
+                
+              <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource SymbolPushButton}" Click="DrawMultiShapes">
+                  <Button.Content>
+                   <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE90D;" />
+                  </Button.Content>
+                </Button>
+                <TextBlock Style="{StaticResource ButtonLabel}" Text="Draw multi shapes" ></TextBlock>
+              </StackPanel>                
 
               <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource SymbolPushButton}" Click="DrawPoints">

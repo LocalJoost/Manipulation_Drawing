@@ -4,8 +4,8 @@ using Windows.Devices.Geolocation;
 
 namespace Manipulation_Drawing
 {
-  public class PointList
-  {
+  public class PointList : IMapObject
+    {
     public PointList()
     {
       Points = new List<BasicGeoposition>();

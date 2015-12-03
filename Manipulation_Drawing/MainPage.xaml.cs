@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -246,7 +247,7 @@ namespace Manipulation_Drawing
 
       foreach (var mapObject in args.MapElements)
       {
-        resultText.AppendLine("Found: " + mapObject.ReadData<PointList>().Name);
+        resultText.AppendLine("Found: " + mapObject.ReadData<IMapObject>().Name);
       }
       var dialog = new MessageDialog(resultText.ToString(),
         args.MapElements.Any() ? "Found the following objects" : "No data found");
@@ -299,6 +300,43 @@ namespace Manipulation_Drawing
       TileCombo.Items.Add(new WmsTileSource("RWS NWB 4326", "http://geodata.nationaalgeoregister.nl/nwbwegen/ows?service=WMS", new[] { "wegvakken", "hectopunten"},"1.3.0", "CRS", 4326));
 
       TileCombo.SelectedIndex = 0;
+    }
+
+
+    // 10586 specific
+
+    private void DrawMultiShapes(object sender, RoutedEventArgs e)
+    {
+      if (!DeleteShapesFromLevel(4))
+      {
+        var strokeColor = Colors.Crimson;
+        var fillColor = Colors.OrangeRed;
+        fillColor.A = 150;
+
+        foreach (var dataObject in MultiPathList.GetMultiPolygons())
+        {
+          var shape = new MapPolygon
+          {
+            StrokeThickness = 1,
+            StrokeColor = strokeColor,
+            FillColor = fillColor,
+            StrokeDashed = false,
+            ZIndex = 4
+          };
+          foreach (var path in dataObject.Paths)
+          {
+              shape.Paths.Add(path);
+          }
+          shape.AddData(dataObject);
+
+          MyMap.MapElements.Add(shape);
+        }
+      }
+    }
+
+    private void OnMapTap(MapControl sender, MapInputEventArgs args)
+    {
+      Debug.WriteLine($"new BasicGeoposition{{Latitude = {args.Location.Position.Latitude}, Longitude = {args.Location.Position.Longitude}}},");
     }
   }
 }
